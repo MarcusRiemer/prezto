@@ -1,0 +1,20 @@
+background        no
+out_to_console 	  yes
+out_to_x	  no
+update_interval	  4
+total_run_times	  0
+short_units	  yes
+pad_percents	  3
+use_spacer        yes
+
+override_utf8_locale yes
+
+TEXT
+,[
+  {"full_text": " cpu: ${hwmon 0 temp 2}°C [$cpu%] ","color": "\#DC322F"},
+  {"full_text": " ram: [$membar] $mem / $memmax ($memperc%)", "color":"\#B58900"},
+  {"full_text": " eth: ${wireless_essid enp4s0} ⇅ ${downspeed enp4s0}/${upspeed enp4s0} ","color":"\#33CC99"},
+  {"full_text": " hdd: ⇅ ${diskio_write /dev/sda}/${diskio_read /dev/sda} ","color":"\#4ECE00"},
+  {"full_text": " ${time %a %d %b} ${time %H:%M} "}
+]
+
