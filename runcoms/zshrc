@@ -11,8 +11,10 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
-alias activateProxy=source\ ~/bin/activateProxy.zsh
-export PATH=~/go:~/.cabal/bin:/home/marcus/.gem/ruby/2.1.0/bin:$PATH
+if [[ `hostname` = "mri-tp" ]]; then
+   alias activateProxy=source\ ~/bin/activateProxy.zsh
+   export PATH=~/go:~/.cabal/bin:/home/marcus/.gem/ruby/2.1.0/bin:$PATH
 
-export GEM_HOME=$(ruby -e 'puts Gem.user_dir')
-export GOPATH=$HOME/go
+   export GEM_HOME=$(ruby -e 'puts Gem.user_dir')
+   export GOPATH=$HOME/go
+fi
