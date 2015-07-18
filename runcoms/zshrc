@@ -10,9 +10,18 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-# Customize to your needs...
-export PATH=/home/marcus/.gem/ruby/2.1.0/bin:/home/marcus/bin:$PATH
-export GOPATH=~/go
-export PATH=$PATH:~/go/bin
+if [[ `hostname` = "mri-tp" ]]; then
+    export PATH=/home/marcus/.gem/ruby/2.1.0/bin:/home/marcus/bin:$PATH
+    export GOPATH=~/go
+    export PATH=$PATH:~/go/bin
 
-export OOO_FORCE_DESKTOP=kde4
+    export OOO_FORCE_DESKTOP=kde4
+fi
+
+if [[ `hostname` = "mri-tp" ]]; then
+   alias activateProxy=source\ ~/bin/activateProxy.zsh
+   export PATH=~/go:~/.cabal/bin:/home/marcus/.gem/ruby/2.1.0/bin:$PATH
+
+   export GEM_HOME=$(ruby -e 'puts Gem.user_dir')
+   export GOPATH=$HOME/go
+fi
