@@ -10,6 +10,20 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
+# Making sure there is a running SSH agent
+# https://wiki.archlinux.org/index.php/SSH_keys#ssh-agent
+if ! pgrep -u $USER ssh-agent > /dev/null; then
+    ssh-agent >! ~/.ssh-agent-thing
+fi
+if [[ "$SSH_AGENT_PID" == "" ]]; then
+    eval $(<~/.ssh-agent-thing)
+fi
+ssh-add -l >/dev/null || alias ssh='ssh-add -l >/dev/null || ssh-add && unalias ssh; ssh'
+
+# Working around missing icons in eg dolphin
+# https://bugs.archlinux.org/task/46093
+XDG_CURRENT_DESKTOP=KDE 
+
 if [[ `hostname` = "marcus-pc" ]]; then
     export PATH=/home/marcus/.gem/ruby/2.2.0/bin:/home/marcus/bin:$PATH
     export GOPATH=~/go
@@ -24,4 +38,5 @@ if [[ `hostname` = "mri-tp" ]]; then
 
    export GEM_HOME=$(ruby -e 'puts Gem.user_dir')
    export GOPATH=$HOME/go
+
 fi
