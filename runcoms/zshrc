@@ -24,19 +24,20 @@ ssh-add -l >/dev/null || alias ssh='ssh-add -l >/dev/null || ssh-add && unalias 
 # https://bugs.archlinux.org/task/46093
 XDG_CURRENT_DESKTOP=KDE 
 
-if [[ `hostname` = "marcus-pc" ]]; then
-    export PATH=/home/marcus/.gem/ruby/2.2.0/bin:/home/marcus/bin:$PATH
-    export GOPATH=~/go
-    export PATH=$PATH:~/go/bin
+# Yay for emacs
+export EDITOR='emacs -nw'
 
-    export OOO_FORCE_DESKTOP=kde4
+# Make go meaningfully available on all systems
+export GOPATH=~/go
+export PATH=$PATH:~/go/bin
+
+# Some ruby stuff likes a meaningfull ruby folder
+export GEM_HOME=$(ruby -e 'puts Gem.user_dir')
+
+if [[ `hostname` = "marcus-pc" ]]; then
+   # (Currently) nothing special about this machine
 fi
 
 if [[ `hostname` = "mri-tp" ]]; then
    alias activateProxy=source\ ~/bin/activateProxy.zsh
-   export PATH=~/go:~/.cabal/bin:/home/marcus/.gem/ruby/2.1.0/bin:$PATH
-
-   export GEM_HOME=$(ruby -e 'puts Gem.user_dir')
-   export GOPATH=$HOME/go
-
 fi
