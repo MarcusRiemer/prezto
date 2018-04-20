@@ -33,18 +33,17 @@ if which ruby >/dev/null && which gem >/dev/null; then
     PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
 fi
 
-if [[ `hostname` = "marcus-pc" ]]; then
-    export GOPATH=~/go
-    export PATH=$PATH:~/go/bin
+# Make go meaningfully available on all systems
+export GOPATH=~/go
+export PATH=$PATH:~/go/bin
 
-    export OOO_FORCE_DESKTOP=kde4
+# Some ruby stuff likes a meaningfull ruby folder
+export GEM_HOME=$(ruby -e 'puts Gem.user_dir')
+
+if [[ `hostname` = "marcus-pc" ]]; then
+   # (Currently) nothing special about this machine
 fi
 
 if [[ `hostname` = "mri-tp" ]]; then
    alias activateProxy=source\ ~/bin/activateProxy.zsh
-   export PATH=~/go:~/.cabal/bin:$PATH
-
-   export GEM_HOME=$(ruby -e 'puts Gem.user_dir')
-   export GOPATH=$HOME/go
-
 fi
