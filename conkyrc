@@ -1,20 +1,19 @@
-background        no
 out_to_console 	  yes
-out_to_x	  no
+out_to_x	      no
 update_interval	  4
 total_run_times	  0
-short_units	  yes
+short_units	      yes
 pad_percents	  3
-use_spacer        yes
 
 override_utf8_locale yes
 
 TEXT
 ,[
-  {"full_text": " bat: ${battery} (${battery_time}) "},
-  {"full_text": " cpu: ${hwmon 0 temp 2}°C [$cpu%] ","color": "\#DC322F"},
+  {"full_text": " bat0: ${battery_short BAT0} [${battery_bar BAT0}] ${battery_time BAT0} "},
+  {"full_text": " bat1: ${battery_short BAT1} [${battery_bar BAT1}] ${battery_time BAT1} "}, 
+  {"full_text": " cpu: $cpu% ","color": "\#DC322F"},
   {"full_text": " ram: [$membar] $mem / $memmax ($memperc%)", "color":"\#B58900"},
-  {"full_text": " eth: ${wireless_essid wlp1s0} ⇅ ${upspeed wlp1s0}/${downspeed wlp1s0} ","color":"\#33CC99"},
+  {"full_text": " wlan: ${wireless_essid wlanOnboard} ⇅ ${upspeed wlanOnboard}/${downspeed wlanOnboard} ","color":"\#33CC99"},
   {"full_text": " hdd: ⇅ ${diskio_write /dev/sda}/${diskio_read /dev/sda} ","color":"\#4ECE00"},
   {"full_text": " ${time %a %d %b} ${time %H:%M} "}
 ]
