@@ -30,15 +30,14 @@ export EDITOR="/usr/bin/emacs"
 
 # Add ruby gems to path, if available
 if which ruby >/dev/null && which gem >/dev/null; then
-    PATH="$(ruby -rubygems -e 'puts Gem.user_dir')/bin:$PATH"
+    PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"
+    # Some ruby stuff likes a meaningfull ruby folder
+    export GEM_HOME=$(ruby -e 'puts Gem.user_dir')
 fi
 
 # Make go meaningfully available on all systems
 export GOPATH=~/go
 export PATH=$PATH:~/go/bin
-
-# Some ruby stuff likes a meaningfull ruby folder
-export GEM_HOME=$(ruby -e 'puts Gem.user_dir')
 
 if [[ `hostname` = "marcus-pc" ]]; then
    # (Currently) nothing special about this machine
