@@ -1,0 +1,14 @@
+#!/bin/bash
+
+i3-msg "workspace 1; append_layout $HOME/.i3/scratch-sql-layout.json"
+
+WORKING_DIR="$HOME/projects/scratch-sql"
+
+xfce4-terminal -T client-compile -H --working-directory="$WORKING_DIR/client" \
+               -e "zsh -is eval 'NG_OPTS=\"--watch\" make client-compile-dev'"
+xfce4-terminal -T client-test -H --working-directory="$WORKING_DIR/client" \
+               -e "zsh -is eval 'make client-test-watch'"
+xfce4-terminal -T server-run -H --working-directory="$WORKING_DIR/server" \
+               -e "zsh -is eval 'make run-dev'"
+xfce4-terminal -T server-test -H --working-directory="$WORKING_DIR/server" \
+               -e "zsh -is eval 'make test-watch'"
