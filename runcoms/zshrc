@@ -1,4 +1,3 @@
-#
 # Executes commands at the start of an interactive session.
 #
 # Authors:
@@ -12,11 +11,11 @@ fi
 
 # Making sure there is a running SSH agent
 # https://wiki.archlinux.org/index.php/SSH_keys#ssh-agent
-if ! pgrep -u $USER ssh-agent > /dev/null; then
+if ! pgrep -u "$USER" ssh-agent > /dev/null; then
     ssh-agent >! ~/.ssh-agent-thing
 fi
 if [[ "$SSH_AGENT_PID" == "" ]]; then
-    eval $(<~/.ssh-agent-thing)
+    eval "$(<~/.ssh-agent-thing)"
 fi
 ssh-add -l >/dev/null || alias ssh='ssh-add -l >/dev/null || ssh-add && unalias ssh; ssh'
 
@@ -24,19 +23,21 @@ ssh-add -l >/dev/null || alias ssh='ssh-add -l >/dev/null || ssh-add && unalias 
 # https://bugs.archlinux.org/task/46093
 XDG_CURRENT_DESKTOP=KDE
 
-# Yay for emacs
-export EDITOR='emacs -nw'
+export PATH="/home/marcus/bin:$PATH"
 
-# Make go meaningfully available on all systems
-export GOPATH=~/go
-export PATH=$PATH:~/go/bin
+export EDITOR="/usr/bin/emacs"
+export VISUAL="/usr/bin/emacs"
+
+# Add ruby gems to path, if available
+if which ruby >/dev/null && which gem >/dev/null; then
+    PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"
+    # Some ruby stuff likes a meaningfull ruby folder
+    export GEM_HOME=$(ruby -e 'puts Gem.user_dir')
+fi
 
 # Ruby gem configuration
 export GEM_HOME=$(ruby -e 'puts Gem.user_dir')
 export PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"
-
-# ~/bin should be in PATH
-export PATH=$PATH:~/bin
 
 if [[ `hostname` = "marcus-pc" ]]; then
    # (Currently) nothing special about this machine
