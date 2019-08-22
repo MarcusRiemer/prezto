@@ -47,7 +47,6 @@ if [[ `hostname` = "mri-tp" ]]; then
    alias activateProxy=source\ ~/bin/activateProxy.zsh
 fi
 
-
 # http://www.zsh.org/mla/users/2005/msg00599.html
 # Execute commands if the first parameter to the
 # zsh instance is "eval"
@@ -58,3 +57,8 @@ then
     source "$SOURCE_FILE"
     set --
 fi
+
+# Theme configuration
+autoload -Uz promptinit
+promptinit
+prompt sorin
