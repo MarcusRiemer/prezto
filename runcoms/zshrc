@@ -22,7 +22,7 @@ ssh-add -l >/dev/null || alias ssh='ssh-add -l >/dev/null || ssh-add && unalias 
 
 # Working around missing icons in eg dolphin
 # https://bugs.archlinux.org/task/46093
-XDG_CURRENT_DESKTOP=KDE 
+XDG_CURRENT_DESKTOP=KDE
 
 # Yay for emacs
 export EDITOR='emacs -nw'
@@ -31,8 +31,12 @@ export EDITOR='emacs -nw'
 export GOPATH=~/go
 export PATH=$PATH:~/go/bin
 
-# Some ruby stuff likes a meaningfull ruby folder
+# Ruby gem configuration
 export GEM_HOME=$(ruby -e 'puts Gem.user_dir')
+export PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"
+
+# ~/bin should be in PATH
+export PATH=$PATH:~/bin
 
 if [[ `hostname` = "marcus-pc" ]]; then
    # (Currently) nothing special about this machine
@@ -40,4 +44,16 @@ fi
 
 if [[ `hostname` = "mri-tp" ]]; then
    alias activateProxy=source\ ~/bin/activateProxy.zsh
+fi
+
+
+# http://www.zsh.org/mla/users/2005/msg00599.html
+# Execute commands if the first parameter to the
+# zsh instance is "eval"
+if [[ $1 == eval ]]
+then
+    SOURCE_FILE=`mktemp`
+    echo "$@" >! "$SOURCE_FILE"
+    source "$SOURCE_FILE"
+    set --
 fi
