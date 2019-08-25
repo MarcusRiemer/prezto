@@ -19,6 +19,10 @@ if [[ "$SSH_AGENT_PID" == "" ]]; then
 fi
 ssh-add -l >/dev/null || alias ssh='ssh-add -l >/dev/null || ssh-add && unalias ssh; ssh'
 
+# Working around missing icons in eg dolphin
+# https://bugs.archlinux.org/task/46093
+XDG_CURRENT_DESKTOP=KDE
+
 export PATH="/home/marcus/bin:$PATH"
 
 export EDITOR="/usr/bin/emacs"
@@ -31,9 +35,9 @@ if which ruby >/dev/null && which gem >/dev/null; then
     export GEM_HOME=$(ruby -e 'puts Gem.user_dir')
 fi
 
-# Make go meaningfully available on all systems
-export GOPATH=~/go
-export PATH=$PATH:~/go/bin
+# Ruby gem configuration
+export GEM_HOME=$(ruby -e 'puts Gem.user_dir')
+export PATH="$(ruby -e 'puts Gem.user_dir')/bin:$PATH"
 
 if [[ `hostname` = "marcus-pc" ]]; then
    # (Currently) nothing special about this machine
@@ -54,3 +58,8 @@ then
     source "$SOURCE_FILE"
     set --
 fi
+
+# Theme configuration
+autoload -Uz promptinit
+promptinit
+prompt sorin

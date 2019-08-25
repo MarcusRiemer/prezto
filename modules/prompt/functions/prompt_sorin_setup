@@ -110,8 +110,6 @@ function prompt_sorin_setup {
   setopt LOCAL_OPTIONS
   unsetopt XTRACE KSH_ARRAYS
   prompt_opts=(cr percent sp subst)
-  _prompt_sorin_precmd_async_pid=0
-  _prompt_sorin_precmd_async_data=$(mktemp "${TMPDIR:-/tmp}/sorin-prompt-async-XXXXXXXXXX")
 
   # Load required functions.
   autoload -Uz add-zsh-hook
@@ -119,6 +117,9 @@ function prompt_sorin_setup {
 
   # Add hook for calling git-info before each command.
   add-zsh-hook precmd prompt_sorin_precmd
+
+  # Tell prezto we can manage this prompt
+  zstyle ':prezto:module:prompt' managed 'yes'
 
   # Set editor-info parameters.
   zstyle ':prezto:module:editor:info:completing' format '%B%F{7}...%f%b'
@@ -144,32 +145,23 @@ function prompt_sorin_setup {
   zstyle ':prezto:module:git:info:keys' format \
     'status' '%b %p %c:%s%A%B%S%a%d%m%r%U%u'
 
+  # Set python-info parameters.
+  zstyle ':prezto:module:python:info:virtualenv' format '%f%F{3}(%v)%F{7} '
+
   # Set up non-zero return value display
   local show_return="✘ "
   # Default is to show the return value
   if zstyle -T ':prezto:module:prompt' show-return-val; then
     show_return+='%? '
   fi
-  # Set python-info format
-  zstyle ':prezto:module:python:info:virtualenv' format '%f%F{3}(%v)%F{7} '
 
-  # Get the async worker set up
+  # Get the async worker set up.
   _sorin_cur_git_root=''
 
   _prompt_sorin_git=''
   _prompt_sorin_pwd=''
 
   # Define prompts.
-<<<<<<< HEAD
-#<<<<<<< HEAD
-#  PROMPT='%n@%m:%F{cyan}${_prompt_sorin_pwd}%(!. %B%F{red}#%f%b.)${editor_info[keymap]} '
-#  RPROMPT='%f${git_info:+${(e)git_info[prompt]}}${editor_info[overwrite]}%(?:: %F{red}⏎%f)${VIM:+" %B%F{green}V%f%b"}${git_info[rprompt]}'
-#=======
-  PROMPT='${SSH_TTY:+"%F{red}%n%f@%F{yellow}%m%f "}%F{cyan}${_prompt_sorin_pwd}%f${git_info:+${(e)git_info[prompt]}}%(!. %B%F{red}#%f%b.)${editor_info[keymap]} '
-  RPROMPT='${editor_info[overwrite]}%(?:: %F{red}⏎%f)${VIM:+" %B%F{green}V%f%b"}${INSIDE_EMACS:+" %B%F{green}E%f%b"}${git_info[rprompt]}'
-#>>>>>>> 88aee30ae8bc969e73c9c59b29e7866b2f7b1b5e
-  SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
-=======
   PROMPT='${SSH_TTY:+"%F{9}%n%f%F{7}@%f%F{3}%m%f "}%F{4}${_prompt_sorin_pwd}%(!. %B%F{1}#%f%b.)${editor_info[keymap]} '
   RPROMPT='$python_info[virtualenv]${editor_info[overwrite]}%(?:: %F{1}'
   RPROMPT+=${show_return}
@@ -184,7 +176,7 @@ function prompt_sorin_preview {
 
   editor-info 2> /dev/null
   prompt_preview_theme 'sorin'
->>>>>>> upstream/master
 }
 
 prompt_sorin_setup "$@"
+# vim: ft=zsh
