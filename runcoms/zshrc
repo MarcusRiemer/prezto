@@ -43,13 +43,13 @@ if [[ `hostname` = "mri-tp" ]]; then
    alias activateProxy=source\ ~/bin/activateProxy.zsh
 fi
 
-
 # http://www.zsh.org/mla/users/2005/msg00599.html
 # Execute commands if the first parameter to the
 # zsh instance is "eval"
 if [[ $1 == eval ]]
 then
     SOURCE_FILE=`mktemp`
+    fc -R
     echo "$@" >! "$SOURCE_FILE"
     source "$SOURCE_FILE"
     set --
