@@ -47,6 +47,14 @@ if [[ `hostname` = "mri-tp" ]]; then
    alias activateProxy=source\ ~/bin/activateProxy.zsh
 fi
 
+# Hook up `direnv` (if it is installed)
+command -v direnv >/dev/null 2>&1 && eval "$(direnv hook zsh)"
+
+# Theme configuration
+autoload -Uz promptinit
+promptinit
+prompt sorin
+
 # http://www.zsh.org/mla/users/2005/msg00599.html
 # Execute commands if the first parameter to the
 # zsh instance is "eval"
@@ -58,8 +66,3 @@ then
     source "$SOURCE_FILE"
     set --
 fi
-
-# Theme configuration
-autoload -Uz promptinit
-promptinit
-prompt sorin
